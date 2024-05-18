@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<link rel="stylesheet" href="style.css">
+
+<body>
+    <form id="signupForm">
+        <fieldset>
+            <legend>Sign-Up Form</legend>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" onfocus="removeError(this)" onblur="validateInput(this)">
+            
+            <label for="username">Preferred Username:</label>
+            <input type="text" id="username" name="username" onfocus="removeError(this)" onblur="validateInput(this)">
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" onfocus="removeError(this)" onblur="validateInput(this)">
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" onfocus="removeError(this)" onblur="validateInput(this)">
+            
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" onfocus="removeError(this)" onblur="validateInput(this)">
+            
+            <label for="interests">Your Interests:</label>
+            <textarea id="interests" name="interests" rows="4" onfocus="removeError(this)" onblur="validateInput(this)"></textarea>
+            
+            <button type="button" onclick="submitForm()">Submit</button>
+            <button type="reset" onclick="resetForm()">Reset</button>
+        </fieldset>
+    </form>
+
+    
+    <fieldset>
+        <div id="output"></div>
+    </fieldset>
+
+    <script>
+        function validateInput(element) {
+            if (element.value.trim() === "") {
+                element.classList.add('na');
+                element.classList.remove('named');
+            } else {
+                element.classList.add('named');
+                element.classList.remove('na');
+            }
+        }
+
+        function removeError(element) {
+            element.classList.remove('error');
+        }
+
+        function submitForm() {
+            const name = document.getElementById('name').value.trim();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const interests = document.getElementById('interests').value.trim();
+
+            if (name && username && password && email && address && interests) {
+                const output = `
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Preferred Username:</strong> ${username}</p>
+                    <p><strong>Password:</strong> ${password}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Address:</strong> ${address}</p>
+                    <p><strong>Interests:</strong> ${interests}</p>
+                `;
+                document.getElementById('output').innerHTML = output;
+            } else {
+                alert('Please fill out all fields.');
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('output').innerHTML = '';
+            const inputs = document.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                input.classList.remove('error', 'success');
+            });
+        }
+    </script>
+</body>
+</html>
